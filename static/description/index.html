@@ -1,55 +1,359 @@
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan" style="color:#875A7B;">Contract Expiry Notification</h2>
-        <h3 class="oe_slogan">Send activity notifications before employee contract expiry</h3>
-        <div class="oe_span12 text-center mt-3">
-            <p class="oe_mt32" style="font-size: 18px;">
-                Sends activity notifications to selected users 15 days before employee contract expiry. Users can opt-in
-                via their user settings by enabling the 'Contract Expiry Notification' field.
-            </p>
-        </div>
-    </div>
-</section>
+<style>
+    .contract-expiry-promo {
+        --ce-navy: #17324d;
+        --ce-blue: #1f6fb2;
+        --ce-sky: #eaf4ff;
+        --ce-cream: #f8f9fc;
+        --ce-line: #dce5ef;
+        --ce-text: #344054;
+        --ce-muted: #667085;
+        --ce-accent: #f58220;
+        --ce-shadow: 0 20px 50px rgba(23, 50, 77, 0.10);
+        background:
+            radial-gradient(circle at top left, rgba(31, 111, 178, 0.10), transparent 28%),
+            radial-gradient(circle at top right, rgba(245, 130, 32, 0.12), transparent 24%),
+            linear-gradient(180deg, #ffffff 0%, #f5f8fc 100%);
+        color: var(--ce-text);
+        padding: 24px 0 8px;
+    }
 
-<section class="oe_container oe_dark">
-    <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan" style="color:#875A7B;">User Preferences Setup</h2>
-        <h3 class="oe_slogan">Easily enable or disable notifications per user</h3>
-        <div class="oe_span12">
-            <p class="oe_mt32" style="font-size: 16px; text-align: center;">
-                Navigate to <b>Settings &gt; Users &amp; Companies &gt; Preferences</b>. Under the <b>Contract Expiry
-                    Notifications</b> section, simply toggle the setting to receive timely alerts.
-            </p>
-            <div class="oe_screenshot" style="text-align: center; margin-top: 20px;">
-                <!-- Save the first screenshot as 'settings_screenshot.png' in this directory -->
-                <img style="max-width: 100%; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 5px;"
-                    src="settings_screenshot.png" alt="Settings Screenshot" />
+    .contract-expiry-shell {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 18px;
+    }
+
+    .contract-expiry-hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--ce-line);
+        border-radius: 28px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fbff 54%, #eef6ff 100%);
+        box-shadow: var(--ce-shadow);
+        padding: 42px;
+        margin-bottom: 28px;
+    }
+
+    .contract-expiry-hero::after {
+        content: "";
+        position: absolute;
+        inset: auto -90px -140px auto;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(245, 130, 32, 0.22), rgba(245, 130, 32, 0));
+        pointer-events: none;
+    }
+
+    .contract-expiry-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 999px;
+        padding: 8px 14px;
+        background: rgba(31, 111, 178, 0.10);
+        color: var(--ce-blue);
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+
+    .contract-expiry-hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+        gap: 28px;
+        align-items: center;
+    }
+
+    .contract-expiry-kicker {
+        color: var(--ce-blue);
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+
+    .contract-expiry-title {
+        font-size: clamp(30px, 4vw, 52px);
+        line-height: 1.05;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--ce-navy);
+        margin: 0 0 16px;
+    }
+
+    .contract-expiry-lead {
+        max-width: 700px;
+        font-size: 18px;
+        line-height: 1.7;
+        color: var(--ce-muted);
+        margin: 0;
+    }
+
+    .contract-expiry-feature-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+    }
+
+    .contract-expiry-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: #ffffff;
+        border: 1px solid var(--ce-line);
+        color: var(--ce-text);
+        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .contract-expiry-chip span {
+        display: inline-flex;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--ce-accent);
+        box-shadow: 0 0 0 5px rgba(245, 130, 32, 0.14);
+    }
+
+    .contract-expiry-visual {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 320px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, rgba(31, 111, 178, 0.08) 0%, rgba(245, 130, 32, 0.06) 100%);
+        border: 1px solid rgba(31, 111, 178, 0.12);
+        padding: 24px;
+    }
+
+    .contract-expiry-visual img {
+        display: block;
+        width: min(100%, 310px);
+        height: auto;
+        filter: drop-shadow(0 20px 40px rgba(23, 50, 77, 0.14));
+    }
+
+    .contract-expiry-section {
+        margin-bottom: 24px;
+    }
+
+    .contract-expiry-section-title {
+        font-size: 24px;
+        line-height: 1.2;
+        color: var(--ce-navy);
+        margin: 0 0 8px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .contract-expiry-section-subtitle {
+        margin: 0 0 20px;
+        color: var(--ce-muted);
+        font-size: 16px;
+        line-height: 1.65;
+        max-width: 760px;
+    }
+
+    .contract-expiry-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+
+    .contract-expiry-card {
+        border: 1px solid var(--ce-line);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+        padding: 22px;
+        height: 100%;
+    }
+
+    .contract-expiry-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .contract-expiry-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--ce-blue), #3f8cd3);
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 800;
+        flex: 0 0 auto;
+    }
+
+    .contract-expiry-card-title {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--ce-navy);
+    }
+
+    .contract-expiry-card p {
+        margin: 0;
+        color: var(--ce-muted);
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+    .contract-expiry-card ol {
+        margin: 14px 0 0;
+        padding-left: 20px;
+        color: var(--ce-text);
+        line-height: 1.75;
+    }
+
+    .contract-expiry-screenshot {
+        margin-top: 18px;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid var(--ce-line);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75), 0 14px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .contract-expiry-screenshot img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .contract-expiry-footer {
+        margin: 10px 0 0;
+        text-align: center;
+        color: var(--ce-muted);
+        font-size: 15px;
+        line-height: 1.7;
+        padding: 18px 0 8px;
+    }
+
+    .contract-expiry-footer strong {
+        color: var(--ce-navy);
+    }
+
+    @media (max-width: 991px) {
+        .contract-expiry-hero {
+            padding: 28px;
+        }
+
+        .contract-expiry-hero-grid,
+        .contract-expiry-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .contract-expiry-visual {
+            min-height: 240px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        .contract-expiry-promo {
+            padding-top: 14px;
+        }
+
+        .contract-expiry-shell {
+            padding: 0 12px;
+        }
+
+        .contract-expiry-hero {
+            padding: 22px;
+            border-radius: 22px;
+        }
+
+        .contract-expiry-title {
+            font-size: 30px;
+        }
+
+        .contract-expiry-lead,
+        .contract-expiry-section-subtitle {
+            font-size: 15px;
+        }
+    }
+</style>
+
+<div class="contract-expiry-promo">
+    <div class="contract-expiry-shell">
+        <section class="contract-expiry-hero">
+            <div class="contract-expiry-badge">Contract Expiry Notification</div>
+            <div class="contract-expiry-hero-grid">
+                <div>
+                    <div class="contract-expiry-kicker">Keep renewals visible before they become urgent</div>
+                    <h1 class="contract-expiry-title">Send activity notifications before employee contracts expire</h1>
+                    <p class="contract-expiry-lead">
+                        This module automatically creates planned activities for opted-in users 15 days before a
+                        contract ends, helping teams act earlier and avoid missed renewals.
+                    </p>
+                    <div class="contract-expiry-feature-row">
+                        <div class="contract-expiry-chip"><span></span> 15-day advance alert</div>
+                        <div class="contract-expiry-chip"><span></span> User opt-in settings</div>
+                        <div class="contract-expiry-chip"><span></span> Planned activity creation</div>
+                    </div>
+                </div>
+                <div class="contract-expiry-visual">
+                    <img src="icon.png" alt="Contract expiry module icon" />
+                </div>
             </div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="oe_container">
-    <div class="oe_row oe_spaced">
-        <h2 class="oe_slogan" style="color:#875A7B;">Automatic Activity Creation</h2>
-        <h3 class="oe_slogan">Never miss a contract renewal</h3>
-        <div class="oe_span12">
-            <p class="oe_mt32" style="font-size: 16px; text-align: center;">
-                The system automatically creates a planned activity for opted-in users on the Employee record 15 days
-                prior to their contract end date.
+        <section class="contract-expiry-section">
+            <h2 class="contract-expiry-section-title">How it works</h2>
+            <p class="contract-expiry-section-subtitle">
+                Users decide whether they want contract expiry reminders from their profile settings. Once enabled,
+                the system sends a planned activity to the responsible user when a contract is nearing its end date.
             </p>
-            <div class="oe_screenshot" style="text-align: center; margin-top: 20px;">
-                <!-- Save the second screenshot as 'activity_screenshot.png' in this directory -->
-                <img style="max-width: 100%; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 5px;"
-                    src="activity_screenshot.png" alt="Activity Screenshot" />
-            </div>
-        </div>
-    </div>
-</section>
 
-<section class="oe_container oe_dark">
-    <div class="oe_row oe_spaced" style="text-align: center;">
-        <h2 class="oe_slogan" style="color:#875A7B;">Developed by AKI</h2>
-        <p class="oe_mt32" style="font-size: 16px;">For more information or support, please contact us.</p>
+            <div class="contract-expiry-cards">
+                <article class="contract-expiry-card">
+                    <div class="contract-expiry-card-header">
+                        <div class="contract-expiry-icon">1</div>
+                        <h3 class="contract-expiry-card-title">User preferences setup</h3>
+                    </div>
+                    <p>
+                        Navigate to <strong>Settings &gt; Users &amp; Companies &gt; Preferences</strong> and enable the
+                        <strong>Contract Expiry Notification</strong> option for the users who should receive alerts.
+                    </p>
+                    <div class="contract-expiry-screenshot">
+                        <img src="settings_screenshot.png" alt="User preferences screenshot" />
+                    </div>
+                </article>
+
+                <article class="contract-expiry-card">
+                    <div class="contract-expiry-card-header">
+                        <div class="contract-expiry-icon">2</div>
+                        <h3 class="contract-expiry-card-title">Automatic activity creation</h3>
+                    </div>
+                    <p>
+                        The module automatically creates a planned activity on the employee contract record 15 days
+                        before the end date, making follow-up visible inside the chatter.
+                    </p>
+                    <div class="contract-expiry-screenshot">
+                        <img src="activity_screenshot.png" alt="Planned activity screenshot" />
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section>
+            <p class="contract-expiry-footer">
+                <strong>Developed by AKI</strong><br />
+                For more information or support, please contact us.
+            </p>
+        </section>
     </div>
-</section>
+</div>
